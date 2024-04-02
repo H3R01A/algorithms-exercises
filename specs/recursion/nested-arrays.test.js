@@ -53,7 +53,11 @@ function nestedAdd(array) {
   if (Array.isArray(curr)) {
     if (Array.isArray(curr[0])) {
       console.log(`within Array is Array ${curr} and ${array}`);
-      return nestedAdd(curr[0]) + nestedAdd(curr.slice(1)) + nestedAdd(array.slice(1));
+      return (
+        nestedAdd(curr[0]) +
+        nestedAdd(curr.slice(1)) +
+        nestedAdd(array.slice(1))
+      );
     } else {
       return curr[0] + nestedAdd(curr.slice(1)) + nestedAdd(array.slice(1));
     }
@@ -69,6 +73,15 @@ function nestedAdd(array) {
 
 // console.log(nestedAdd([1,20,[4]])); // 25
 // console.log(nestedAdd([6,[[7]],1])); // 14
+
+//Big O Time Complexity
+
+/**
+ * O(nk)
+ *  n - because we have to iterate through the various elements in an array
+ *  k - for the depth of the arrays
+ *
+ */
 
 test('nested arrays addition', () => {
   expect(nestedAdd([1, 2, 3])).toEqual(6);
