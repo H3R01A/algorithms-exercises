@@ -5,43 +5,40 @@
 
   You'll need to write more than just one function
 
-  i: array of numbers
-  o: sorted of array of numbers
+
 */
 
+//recursive function
+//i: array of numbers
+//o: SORTED array of numbers
 const mergeSort = (nums) => {
-  //merge function
-  //i: arr1 and arr2
-  //o: sorted array
-  function merge(arr1, arr2) {
-    const sortArr = [];
-    //loop through both arrays while they both have length and determine which current element smaller
-    while (arr1.length > 0 && arr2.length > 0) {
-      //add smaller element to sortArr to return back (using shift to remove the first element)
-      if (arr1[0] < arr2[0]) {
-        sortArr.push(arr1.shift());
-      } else {
-        sortArr.push(arr2.shift());
-      }
-    }
-    //if arr1 is empty, add the rest of arr2 and return the sorted array
-    if (arr1.length === 0) {
-      return [...sortArr, ...arr2];
-    }
-    //if arr2 is empty, add the rest of arr1 and return the sorted array
-    if (arr2.length === 0) {
-      return [...sortArr, ...arr1];
-    }
-  }
-
-  //recursive function
   //base case
   if (nums.length === 1) return nums;
 
-  const middle = nums.length / 2;
+  const middle = Math.floor(nums.length / 2);
+  const arr1 = nums.slice(0, middle);
+  const arr2 = nums.slice(middle);
   //recursive case
-  return merge(mergeSort(nums.slice(0, middle)), mergeSort(nums.slice(middle)));
+  return merge(mergeSort(arr1), mergeSort(arr2));
 };
+
+//merge function
+//i: two sorted arrays
+//o: combined sorted array
+function merge(arr1, arr2) {
+  const results = [];
+  //loop through both arrays while they both have length and determine which current element smaller
+  while (arr1.length && arr2.length) {
+    //add smaller element to sortArr to return back (using shift to remove the first element)
+    if (arr1[0] <= arr2[0]) {
+      results.push(arr1.shift());
+    } else {
+      results.push(arr2.shift());
+    }
+  }
+  //since either arr1 or arr2 will be empty AND the remaining amount will be sorted, we can concat both at the end
+  return results.concat(arr1, arr2);
+}
 
 // const nums2 = [1, 22, 10, 6];
 // console.log(mergeSort(nums2));
@@ -51,6 +48,21 @@ const mergeSort = (nums) => {
 
 // const nums = [10, 5, 3, 8, 2, 6, 4, 7, 9, 1];
 // console.log(mergeSort(nums));
+
+/**
+ * Time and Space Analysis
+ *
+ * Time Complexity
+ *
+ * This would be O(n log n) because we have to iterate through all of the elements at least once so n. But then with economies of scale, we know the the arrays passed into merge will already be sorted so we do not have to look at them again
+ *
+ *
+ *
+ * Space Complexity
+ *
+ * This would be O(n) because for each element we are technically creating an array
+ *
+ */
 
 // unit tests
 // do not modify the below code
