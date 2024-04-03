@@ -12,8 +12,8 @@
 //i: array of numbers
 //o: SORTED array of numbers
 const mergeSort = (nums) => {
-  //base case
-  if (nums.length === 1) return nums;
+  //base case - return if length is 1 or 0
+  if (nums.length < 0) return nums;
 
   const middle = Math.floor(nums.length / 2);
   const arr1 = nums.slice(0, middle);
